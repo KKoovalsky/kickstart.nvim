@@ -601,11 +601,30 @@ require('lazy').setup({
         },
       }
 
+      local function has_value(tab, val)
+        for _, value in ipairs(tab) do
+          if value == val then
+            return true
+          end
+        end
+
+        return false
+      end
+
       local cmp_nvim_lsp = require 'cmp_nvim_lsp'
+      local cwd = vim.fn.getcwd()
+      local working_dir_name = cwd:match '([^\\/]*)$'
+      local esp32_projects = { 'SensorsuiteCmd', 'sensoursuite_cmd', 'SensorsuiteCmdIndoor' }
+      local clangd_cmd = ''
+      if has_value(esp32_projects, working_dir_name) then
+        clangd_cmd = vim.fn.expand '$HOME/.local/clangd_esp_17.0.1/bin/clangd'
+      else
+        clangd_cmd = 'clangd'
+      end
       require('lspconfig').clangd.setup {
         capabilities = cmp_nvim_lsp.default_capabilities(),
         cmd = {
-          'clangd',
+          clangd_cmd,
           '--offset-encoding=utf-16',
         },
       }
