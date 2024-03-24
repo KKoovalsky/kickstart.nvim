@@ -898,6 +898,12 @@ require('lazy').setup({
   {
     'skywind3000/asynctasks.vim',
   },
+  {
+    'L3MON4D3/LuaSnip',
+    version = 'v2.*',
+    -- install jsregexp (optional!).
+    build = 'make install_jsregexp',
+  },
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
