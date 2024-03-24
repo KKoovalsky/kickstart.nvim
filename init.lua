@@ -897,6 +897,9 @@ require('lazy').setup({
   },
   {
     'skywind3000/asynctasks.vim',
+    config = function()
+      vim.g.asynctasks_extra_config = { '~/.config/nvim/tasks.ini' }
+    end,
   },
   {
     'L3MON4D3/LuaSnip',
