@@ -506,6 +506,8 @@ require('lazy').setup({
           --  For example, in C this would take you to the header.
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
+          map('<leader>f', vim.lsp.buf.format, '[F]ormat')
+
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
           --    See `:help CursorHold` for information about when this is executed
@@ -523,6 +525,24 @@ require('lazy').setup({
               callback = vim.lsp.buf.clear_references,
             })
           end
+
+          local autoformat_group = vim.api.nvim_create_augroup('Autoformat', { clear = true })
+          vim.api.nvim_create_user_command('AutoformatEnable', function()
+            -- Setup an autocmd for automatic formatting before saving files
+            vim.api.nvim_create_autocmd('BufWritePre', {
+              group = autoformat_group,
+              pattern = '*', -- This applies to all files, adjust the pattern as needed
+              callback = function()
+                vim.lsp.buf.format { async = false }
+              end,
+            })
+          end, { desc = 'Enable automatic formatting on save' })
+
+          -- Define the 'AutoformatDisable' command
+          vim.api.nvim_create_user_command('AutoformatDisable', function()
+            -- Clear the autocmds in our autoformatting group to disable autoformatting
+            vim.api.nvim_clear_autocmds { group = autoformat_group }
+          end, { desc = 'Disable automatic formatting on save' })
         end,
       })
 
