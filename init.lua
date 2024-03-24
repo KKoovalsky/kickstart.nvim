@@ -889,6 +889,15 @@ require('lazy').setup({
   {
     'github/copilot.vim',
   },
+  {
+    'skywind3000/asyncrun.vim',
+    config = function()
+      vim.g.asyncrun_open = 14
+    end,
+  },
+  {
+    'skywind3000/asynctasks.vim',
+  },
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
