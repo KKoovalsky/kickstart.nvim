@@ -637,7 +637,7 @@ require('lazy').setup({
       local esp32_projects = { 'SensorsuiteCmd', 'sensoursuite_cmd', 'SensorsuiteCmdIndoor' }
       local clangd_cmd = ''
       if has_value(esp32_projects, working_dir_name) then
-        clangd_cmd = vim.fn.expand '$HOME/.local/clangd_esp_17.0.1/bin/clangd'
+        clangd_cmd = vim.fn.expand '$HOME/.local/clangd_esp32'
       else
         clangd_cmd = 'clangd'
       end
