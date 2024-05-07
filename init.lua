@@ -886,6 +886,11 @@ require('lazy').setup({
         window = {
           position = 'current',
         },
+        filesystem = {
+          filtered_items = {
+            visible = true, -- when true, they will just be displayed differently than normal items
+          },
+        },
       }
     end,
   },
