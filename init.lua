@@ -510,6 +510,7 @@ require('lazy').setup({
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
           map('<leader>f', vim.lsp.buf.format, '[F]ormat')
+          vim.keymap.set('v', '<leader>F', vim.lsp.buf.format, { buffer = event.buf, desc = 'LSP: [F]ormat' })
 
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
