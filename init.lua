@@ -195,8 +195,8 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 -- [[ Kacper's overrides ]]
 vim.keymap.set('i', 'jk', '<Esc>', { desc = 'Quit insert mode' })
-vim.keymap.set('n', '<C-e>', ':Neotree<CR>', { desc = 'Open file explorer' })
-vim.keymap.set('n', '<C-t>', ':tabnew<CR>:Neotree<CR>', { desc = 'New tab with file explorer opened' })
+vim.keymap.set('n', '<C-e>', ':Neotree reveal float<CR>', { desc = 'Open file explorer' })
+vim.keymap.set('n', '<C-t>', ':tabnew<CR>:Neotree reveal<CR>', { desc = 'New tab with file explorer opened' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
