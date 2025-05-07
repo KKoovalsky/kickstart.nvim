@@ -925,13 +925,13 @@ require('lazy').setup({
   },
   {
     'CopilotC-Nvim/CopilotChat.nvim',
-    branch = 'canary',
+    branch = 'main',
     dependencies = {
       { 'github/copilot.vim' }, -- or zbirenbaum/copilot.lua
-      { 'nvim-lua/plenary.nvim' }, -- for curl, log wrapper
+      { 'nvim-lua/plenary.nvim', branch = 'master' }, -- for curl, log wrapper
     },
+    build = "make tiktoken",
     opts = {
-      debug = true, -- Enable debugging
     },
     -- See Commands section for default commands if you want to lazy load on them
   },
