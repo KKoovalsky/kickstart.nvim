@@ -730,7 +730,7 @@ require('lazy').setup({
             luasnip.lsp_expand(args.body)
           end,
         },
-        completion = { completeopt = 'menu,menuone,noinsert' },
+        completion = { completeopt = 'menu,menuone,noinsert,popup' },
 
         -- For an understanding of why these mappings were
         -- chosen, you will need to read `:help ins-completion`
@@ -931,8 +931,11 @@ require('lazy').setup({
       { 'github/copilot.vim' }, -- or zbirenbaum/copilot.lua
       { 'nvim-lua/plenary.nvim', branch = 'master' }, -- for curl, log wrapper
     },
-    build = "make tiktoken",
+    build = 'make tiktoken',
     opts = {
+      mappings = {
+        complete = { insert = '<C-l>' },
+      },
     },
     -- See Commands section for default commands if you want to lazy load on them
   },
