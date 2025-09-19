@@ -157,6 +157,12 @@ vim.opt.scrolloff = 10
 -- Vertical column
 vim.opt.colorcolumn = '120'
 
+-- Indentation
+vim.opt.expandtab = true -- Use spaces instead of tabs
+vim.opt.shiftwidth = 4 -- Size of an indent
+vim.opt.tabstop = 4 -- Number of spaces tabs count for
+vim.opt.softtabstop = 4 -- Number of spaces a tab key press inserts
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
