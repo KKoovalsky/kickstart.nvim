@@ -626,7 +626,7 @@ require('lazy').setup({
             -- by the server configuration above. Useful when disabling
             -- certain features of an LSP (for example, turning off formatting for tsserver)
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
+            vim.lsp.config()[server_name].setup(server)
           end,
         },
       }
@@ -651,13 +651,13 @@ require('lazy').setup({
       else
         clangd_cmd = 'clangd'
       end
-      require('lspconfig').clangd.setup {
+      vim.lsp.config('clangd', {
         capabilities = cmp_nvim_lsp.default_capabilities(),
         cmd = {
           clangd_cmd,
           '--offset-encoding=utf-16',
         },
-      }
+      })
     end,
   },
 
