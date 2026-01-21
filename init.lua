@@ -645,17 +645,31 @@ require('lazy').setup({
       local working_dir_name = cwd:match '([^\\/]*)$'
       local esp32_projects = { 'SensorsuiteCmd', 'sensoursuite_cmd', 'SensorsuiteCmdIndoor' }
       local clangd_cmd = ''
+      local clangd_args = { '--offset-encoding=utf-16' }
+
       if has_value(esp32_projects, working_dir_name) then
         clangd_cmd = vim.fn.expand '$HOME/.local/bin/clangd_esp32'
       else
         clangd_cmd = 'clangd'
       end
+
+      -- Check for project-local clangd config (git-ignored)
+      local clangd_local_config = cwd .. '/.clangd-local'
+      if vim.fn.filereadable(clangd_local_config) == 1 then
+        local config_content = vim.fn.readfile(clangd_local_config)
+        for _, line in ipairs(config_content) do
+          -- Skip empty lines and comments
+          if line:match('^%s*$') == nil and line:match('^%s*#') == nil then
+            table.insert(clangd_args, line)
+          end
+        end
+      end
+
+      table.insert(clangd_args, 1, clangd_cmd)
+
       vim.lsp.config('clangd', {
         capabilities = cmp_nvim_lsp.default_capabilities(),
-        cmd = {
-          clangd_cmd,
-          '--offset-encoding=utf-16',
-        },
+        cmd = clangd_args,
       })
     end,
   },
