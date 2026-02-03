@@ -915,9 +915,9 @@ require('lazy').setup({
       }
     end,
   },
-  {
-    'github/copilot.vim',
-  },
+  -- {
+  -- 'github/copilot.vim',
+  -- },
   {
     'skywind3000/asyncrun.vim',
     config = function()
@@ -943,21 +943,21 @@ require('lazy').setup({
       -- configuration comes here
     },
   },
-  {
-    'CopilotC-Nvim/CopilotChat.nvim',
-    branch = 'main',
-    dependencies = {
-      { 'github/copilot.vim' }, -- or zbirenbaum/copilot.lua
-      { 'nvim-lua/plenary.nvim', branch = 'master' }, -- for curl, log wrapper
-    },
-    build = 'make tiktoken',
-    opts = {
-      mappings = {
-        complete = { insert = '<C-l>' },
-      },
-    },
-    -- See Commands section for default commands if you want to lazy load on them
-  },
+  -- {
+  --   'CopilotC-Nvim/CopilotChat.nvim',
+  --   branch = 'main',
+  --   dependencies = {
+  --     { 'github/copilot.vim' }, -- or zbirenbaum/copilot.lua
+  --     { 'nvim-lua/plenary.nvim', branch = 'master' }, -- for curl, log wrapper
+  --   },
+  --   build = 'make tiktoken',
+  --   opts = {
+  --     mappings = {
+  --       complete = { insert = '<C-l>' },
+  --     },
+  --   },
+  --   -- See Commands section for default commands if you want to lazy load on them
+  -- },
   {
     'tpope/vim-fugitive',
   },
@@ -1000,6 +1000,16 @@ require('lazy').setup({
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {},
+  },
+  {
+    'Exafunction/windsurf.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'hrsh7th/nvim-cmp',
+    },
+    config = function()
+      require('codeium').setup {}
+    end,
   },
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
