@@ -979,6 +979,19 @@ require('lazy').setup({
     'tpope/vim-fugitive',
   },
   {
+    'sindrets/diffview.nvim',
+    cmd = { 'DiffviewOpen', 'DiffviewFileHistory' },
+    keys = {
+      { '<leader>gd', '<cmd>DiffviewOpen<cr>', desc = 'Diffview: working tree' },
+      { '<leader>gh', '<cmd>DiffviewFileHistory %<cr>', desc = 'Diffview: file history' },
+      { '<leader>gc', '<cmd>DiffviewClose<cr>', desc = 'Diffview: close' },
+    },
+    opts = {
+      enhanced_diff_hl = true,
+      view = { merge_tool = { layout = 'diff3_mixed' } },
+    },
+  },
+  {
     'preservim/tagbar',
   },
   {
