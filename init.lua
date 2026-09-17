@@ -618,6 +618,13 @@ require('lazy').setup({
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {
+        -- Newer mason-lspconfig versions default to automatically enabling any
+        -- installed Mason package that has a matching lsp/*.lua config (e.g.
+        -- nvim-lspconfig ships one for `stylua --lsp`). We only install stylua
+        -- as a conform.nvim formatter, and the Mason build lacks the --lsp
+        -- feature, so this was starting a doomed LSP client. Servers here are
+        -- managed explicitly via `handlers` below, so turn it off.
+        automatic_enable = false,
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
