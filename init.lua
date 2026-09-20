@@ -313,7 +313,11 @@ require('lazy').setup({
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
-    branch = '0.1.x',
+    -- NOTE: '0.1.x' is Telescope's old stable branch and is stale relative to
+    -- this Neovim version -- it still calls vim.lsp.util.jump_to_location /
+    -- make_position_params() the pre-0.12 way, which throws deprecation
+    -- warnings on `gd`. master already fixed both and requires Nvim 0.11+,
+    -- which we're well past, so track it instead.
     dependencies = {
       'nvim-lua/plenary.nvim',
       { -- If encountering errors, see telescope-fzf-native README for installation instructions
@@ -623,19 +627,24 @@ require('lazy').setup({
         -- nvim-lspconfig ships one for `stylua --lsp`). We only install stylua
         -- as a conform.nvim formatter, and the Mason build lacks the --lsp
         -- feature, so this was starting a doomed LSP client. Servers here are
-        -- managed explicitly via `handlers` below, so turn it off.
+        -- enabled explicitly below instead, so turn it off.
+        --
+        -- NOTE: `handlers` used to do the per-server enabling here, but current
+        -- mason-lspconfig no longer supports that option at all (silently
+        -- ignored) -- it only understands `automatic_enable`. With that == false
+        -- and no handlers support, NOTHING was being enabled, which is why LSP
+        -- (and gd) never attached to anything.
         automatic_enable = false,
-        handlers = {
-          function(server_name)
-            local server = servers[server_name] or {}
-            -- This handles overriding only values explicitly passed
-            -- by the server configuration above. Useful when disabling
-            -- certain features of an LSP (for example, turning off formatting for tsserver)
-            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
-          end,
-        },
       }
+
+      for server_name, server in pairs(servers) do
+        -- This handles overriding only values explicitly passed
+        -- by the server configuration above. Useful when disabling
+        -- certain features of an LSP (for example, turning off formatting for tsserver)
+        server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+        vim.lsp.config(server_name, server)
+        vim.lsp.enable(server_name)
+      end
 
       local function has_value(tab, val)
         for _, value in ipairs(tab) do
@@ -1066,7 +1075,7 @@ require('lazy').setup({
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
