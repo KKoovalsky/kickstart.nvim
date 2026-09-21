@@ -939,6 +939,15 @@ require('lazy').setup({
       require('neo-tree').setup {
         window = {
           position = 'current',
+          mappings = {
+            ['Y'] = {
+              function(state)
+                local path = state.tree:get_node().path
+                vim.fn.setreg('+', path)
+              end,
+              desc = 'copy_path_to_clipboard',
+            },
+          },
         },
         filesystem = {
           filtered_items = {
