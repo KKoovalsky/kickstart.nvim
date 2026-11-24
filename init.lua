@@ -176,6 +176,15 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagn
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
+-- Show diagnostics for the cursor line in a float after the cursor rests (see 'updatetime')
+vim.api.nvim_create_autocmd('CursorHold', {
+  desc = 'Show line diagnostics in a floating window',
+  group = vim.api.nvim_create_augroup('diagnostic-float-on-hold', { clear = true }),
+  callback = function()
+    vim.diagnostic.open_float(nil, { focus = false, scope = 'line' })
+  end,
+})
+
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
