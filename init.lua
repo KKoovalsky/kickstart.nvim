@@ -378,7 +378,16 @@ require('lazy').setup({
         --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
         --   },
         -- },
-        -- pickers = {}
+        -- show dotfiles (.gitlab-ci.yml, .vscode/, ...) but still respect .gitignore,
+        -- and skip .git/ and Claude Code worktrees (full repo copies)
+        pickers = {
+          find_files = {
+            find_command = { 'rg', '--files', '--hidden', '--glob', '!**/.git/*', '--glob', '!**/.claude/worktrees/*' },
+          },
+          live_grep = {
+            additional_args = { '--hidden', '--glob', '!**/.git/*', '--glob', '!**/.claude/worktrees/*' },
+          },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -827,7 +836,7 @@ require('lazy').setup({
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'path' },
-          { name = 'codeium' },
+          -- { name = 'codeium' }, -- disabled together with windsurf.nvim below
         },
       }
     end,
@@ -961,6 +970,8 @@ require('lazy').setup({
         filesystem = {
           filtered_items = {
             visible = true, -- when true, they will just be displayed differently than normal items
+            hide_dotfiles = false,
+            hide_hidden = false,
           },
         },
       }

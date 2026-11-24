@@ -17,6 +17,10 @@ return {
       vim.g.gutentags_project_root = { '.git', '.hg', '.svn' }
       vim.g.gutentags_ctags_exclude = {
         'build',
+        -- Claude Code worktrees (.claude/worktrees/<name>) are full checkouts
+        -- of the same repo; tagging them duplicates every symbol and makes
+        -- ctrl-] land in a worktree copy instead of the real file.
+        '.claude',
         '.cache',
         '.mypy_cache',
         '.ruff_cache',
